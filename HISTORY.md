@@ -1,3 +1,7 @@
+# UNRELEASED
+
+  * Fix bug where the return value of the auth URL defined as a function was not being used in a certain place (the orig oauth instance was being used instead)
+
 # 1.5.0 (2017-02-24)
 
   * Allow a function to be defined for `authorizationURL` and `tokenURL`
