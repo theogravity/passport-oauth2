@@ -1,10 +1,9 @@
-# passport-oauth2
+# passport-oauth2-alt
 
-[![Build](https://img.shields.io/travis/jaredhanson/passport-oauth2.svg)](https://travis-ci.org/jaredhanson/passport-oauth2)
-[![Coverage](https://img.shields.io/coveralls/jaredhanson/passport-oauth2.svg)](https://coveralls.io/r/jaredhanson/passport-oauth2)
-[![Quality](https://img.shields.io/codeclimate/github/jaredhanson/passport-oauth2.svg?label=quality)](https://codeclimate.com/github/jaredhanson/passport-oauth2)
-[![Dependencies](https://img.shields.io/david/jaredhanson/passport-oauth2.svg)](https://david-dm.org/jaredhanson/passport-oauth2)
-
+[![Build](https://img.shields.io/travis/theogravity/passport-oauth2-alt.svg)](https://travis-ci.org/theogravity/passport-oauth2-alt)
+[![Coverage](https://img.shields.io/coveralls/theogravity/passport-oauth2-alt.svg)](https://coveralls.io/r/theogravity/passport-oauth2-alt)
+[![Quality](https://img.shields.io/codeclimate/github/theogravity/passport-oauth2-alt.svg?label=quality)](https://codeclimate.com/github/theogravity/passport-oauth2-alt)
+[![Dependencies](https://img.shields.io/david/theogravity/passport-oauth2-alt.svg)](https://david-dm.org/theogravity/passport-oauth2-alt)
 
 General-purpose OAuth 2.0 authentication strategy for [Passport](http://passportjs.org/).
 
@@ -25,9 +24,19 @@ that is not already supported are encouraged to sub-class this strategy.  If you
 choose to open source the new provider-specific strategy, please add it to the
 list so other people can find it.
 
+## Fork notice
+
+This project is a fork off of jaredhanson's [passport-oauth2](https://github.com/jaredhanson/passport-oauth2).
+
+Changes:
+
+- The authorization URL can be a function to assign a dynamic URL
+- The tokenURL can be a function to assign a dynamic URL
+- The callback function to load the user profile, `userProfile()`, now has a 3rd parameter, `tokenReqResults`, which is the results from the access token API call. This is useful if the user profile URL needs to be dynamic.
+
 ## Install
 
-    $ npm install passport-oauth2
+    $ npm install passport-oauth2-alt
 
 ## Usage
 
@@ -43,6 +52,25 @@ and calls `cb` providing a user.
 passport.use(new OAuth2Strategy({
     authorizationURL: 'https://www.example.com/oauth2/authorize',
     tokenURL: 'https://www.example.com/oauth2/token',
+    clientID: EXAMPLE_CLIENT_ID,
+    clientSecret: EXAMPLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:3000/auth/example/callback"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ exampleId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
+```
+
+As functions:
+
+```js
+passport.use(new OAuth2Strategy({
+    // req, options from .authenticate()
+    authorizationURL: (req, options) => { return 'https://www.example.com/oauth2/authorize' },
+    tokenURL: (req, options) => { return 'https://www.example.com/oauth2/token' } ,
     clientID: EXAMPLE_CLIENT_ID,
     clientSecret: EXAMPLE_CLIENT_SECRET,
     callbackURL: "http://localhost:3000/auth/example/callback"

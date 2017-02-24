@@ -123,7 +123,36 @@ describe('OAuth2Strategy', function() {
         expect(url).to.equal('https://www.example.com/oauth2/authorize?response_type=code&client_id=ABC123');
       });
     }); // that redirects to service provider without redirect URI
-    
+
+    describe('with dynamic redirect URI', function() {
+      var strategy = new OAuth2Strategy({
+        authorizationURL: function (req, params) {
+          return 'https://www.example.com/oauth2/authorize'
+        },
+        tokenURL: 'https://www.example.com/oauth2/token',
+        clientID: 'ABC123',
+        clientSecret: 'secret'
+      },
+      function(accessToken, refreshToken, profile, done) {});
+
+      var url;
+
+      before(function(done) {
+        chai.passport.use(strategy)
+          .redirect(function(u) {
+            url = u;
+            done();
+          })
+          .req(function(req) {
+          })
+          .authenticate();
+      });
+
+      it('should be redirected', function() {
+        expect(url).to.equal('https://www.example.com/oauth2/authorize?response_type=code&client_id=ABC123');
+      });
+    });
+
     describe('that redirects to service provider with redirect URI', function() {
       var strategy = new OAuth2Strategy({
         authorizationURL: 'https://www.example.com/oauth2/authorize',
