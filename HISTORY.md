@@ -1,3 +1,7 @@
+# 1.6.1 (2017-02-24)
+
+  * Added `transformAuthCode(authCode)` to manipulate the auth code result before it gets passed to the tokenURL
+
 # 1.6.0 (2017-02-24)
 
   * Updated `tokenParams(options)` ->  `tokenParams(options, authCode, req)`
@@ -11,4 +15,3 @@
 
   * Allow a function to be defined for `authorizationURL` and `tokenURL`
   * The profile callback function, `userProfile()`, now takes in the results of the access token call in the 3rd parameter
-
