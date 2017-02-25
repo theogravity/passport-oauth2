@@ -1,3 +1,7 @@
+# 1.6.2 (2017-02-24)
+
+  * Changed `userProfile(accessToken, done, tokenReqResults)` -> `userProfile(accessToken, done, tokenReqResults, req)`
+
 # 1.6.1 (2017-02-24)
 
   * Added `transformAuthCode(authCode)` to manipulate the auth code result before it gets passed to the tokenURL
