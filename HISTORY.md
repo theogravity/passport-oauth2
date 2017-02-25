@@ -1,3 +1,7 @@
+# 1.6.3 (2017-02-24)
+
+  * Changed `userProfile(accessToken, done, tokenReqResults, req)` -> `userProfile(accessToken, done, tokenReqResults, req, oauthInstance)`
+
 # 1.6.2 (2017-02-24)
 
   * Changed `userProfile(accessToken, done, tokenReqResults)` -> `userProfile(accessToken, done, tokenReqResults, req)`
